@@ -4,12 +4,11 @@ import { CreatePostDto, UpdatePostDto } from '../dtos/post.dto'
 const prisma = new PrismaClient()
 
 class PostService {
-
 	async getPosts() {
 		return await prisma.post.findMany()
 	}
 
-	async getOnePost(id: number) {
+	async getPostById(id: number) {
 		return await prisma.post.findUnique({ where: { id } })
 	}
 
@@ -18,13 +17,27 @@ class PostService {
 			data: {
 				title: post.title,
 				content: post.content,
+				imageUrl: post.imageUrl,
 				userId: userId,
 			},
 		})
 	}
 
-	async updatePost(id:number, data:UpdatePostDto){
-		return await
+	async updatePost(id: number, post: UpdatePostDto) {
+		return await prisma.post.update({
+			where: {
+				id: id,
+			},
+			data: { ...post },
+		})
+	}
+
+	async deletePost(id: number) {
+		await prisma.post.delete({
+			where: {
+				id: id,
+			},
+		})
 	}
 }
 export const postService = new PostService()
