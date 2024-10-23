@@ -14,9 +14,20 @@ class PostService {
 						avatarUrl: true,
 					},
 				},
-				likes: true,
-				comments: true,
-				favorite: true,
+				comments: {
+					select: {
+						id: true,
+						content: true,
+						userId: true,
+						postId: true,
+					},
+				},
+				likes: {
+					select: { id: true, userId: true, postId: true },
+				},
+				favorite: {
+					select: { id: true, userId: true, postId: true },
+				},
 			},
 		})
 	}
@@ -24,7 +35,29 @@ class PostService {
 	async getPostById(id: number) {
 		return await prisma.post.findUnique({
 			where: { id },
-			include: { user: true, comments: true, likes: true, favorite: true },
+			include: {
+				user: {
+					select: {
+						id: true,
+						name: true,
+						avatarUrl: true,
+					},
+				},
+				comments: {
+					select: {
+						id: true,
+						content: true,
+						userId: true,
+						postId: true,
+					},
+				},
+				likes: {
+					select: { id: true, userId: true, postId: true },
+				},
+				favorite: {
+					select: { id: true, userId: true, postId: true },
+				},
+			},
 		})
 	}
 
