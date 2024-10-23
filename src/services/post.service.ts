@@ -7,7 +7,13 @@ class PostService {
 	async getPosts() {
 		return await prisma.post.findMany({
 			include: {
-				user: true,
+				user: {
+					select: {
+						id: true,
+						name: true,
+						avatarUrl: true,
+					},
+				},
 				likes: true,
 				comments: true,
 				favorite: true,
