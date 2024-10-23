@@ -19,12 +19,13 @@ class TokenService {
 			const payload = jwt.verify(token, ACCESS_TOKEN_SECRET) as {
 				userId: number
 			}
+			if (!payload) throw new Error('Invalid token')
 			const user = await prisma.user.findUnique({
 				where: { id: payload.userId },
 				select: { id: true, name: true, email: true, role: true },
 			})
 
-			return { user }
+			return user
 		} catch (error) {
 			throw new Error('Invalid token')
 		}

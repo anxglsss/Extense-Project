@@ -5,11 +5,21 @@ const prisma = new PrismaClient()
 
 class PostService {
 	async getPosts() {
-		return await prisma.post.findMany()
+		return await prisma.post.findMany({
+			include: {
+				user: true,
+				likes: true,
+				comments: true,
+				favorite: true,
+			},
+		})
 	}
 
 	async getPostById(id: number) {
-		return await prisma.post.findUnique({ where: { id } })
+		return await prisma.post.findUnique({
+			where: { id },
+			include: { user: true, comments: true, likes: true, favorite: true },
+		})
 	}
 
 	async createPost(post: CreatePostDto, userId: number) {

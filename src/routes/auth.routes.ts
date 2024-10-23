@@ -15,3 +15,4 @@ authRouter.post(
 	validationMiddleware(RegisterUserSchema),
 	authController.register
 )
+authRouter.post('/logout', authController.logout)
