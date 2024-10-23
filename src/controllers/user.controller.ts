@@ -4,7 +4,7 @@ import { userService } from '../services/user.service'
 class UserController {
 	async getAllUsers(req: Request, res: Response) {
 		try {
-			const users = userService.getUsers()
+			const users = await userService.getUsers()
 			res.status(200).json(users)
 		} catch (error) {
 			res.status(404).json(error)
@@ -31,8 +31,8 @@ class UserController {
 
 	async deleteUser(req: Request, res: Response) {
 		try {
-			const user = await userService.deleteUser(Number(req.params.id))
-			res.status(200).json(user)
+			await userService.deleteUser(Number(req.params.id))
+			res.status(200).json({ message: 'User deleted' })
 		} catch (error) {
 			res.status(404).json(error)
 		}

@@ -16,6 +16,7 @@ async function main() {
 			name: 'Madiyar Abiken',
 			password: '12345678',
 			role: 'ADMIN',
+			avatarUrl: '',
 		},
 	})
 	console.log(user)

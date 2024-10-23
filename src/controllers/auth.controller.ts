@@ -18,7 +18,7 @@ class AuthController {
 			)
 			res.status(200).json({ accessToken, refreshToken })
 		} catch (error) {
-			res.status(401).json(error)
+			res.status(401).json({ error: error })
 		}
 	}
 }
