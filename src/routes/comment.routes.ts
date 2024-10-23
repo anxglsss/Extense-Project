@@ -4,7 +4,7 @@ import { authMiddleware } from '../middlewares/auth.middleware'
 
 export const commentRouter = Router()
 
-commentRouter.get('/:postId', commentController.getCommentsByPostId)
+commentRouter.get('/:postId', commentController.getCommentsByPost)
 commentRouter.post(
 	'/create/:postId',
 	authMiddleware as any,
