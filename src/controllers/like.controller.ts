@@ -1,32 +1,33 @@
 import { Request, Response } from 'express'
-import { LikeDto } from '../dtos/like.dto'
 import { likeService } from '../services/like.service'
 
 class LikeController {
 	async likePost(req: Request, res: Response) {
-		const { postId, userId }: LikeDto = req.body
+		const postId = Number(req.params.postId)
+		const userId = (req as UserRequest).user.id
 
 		try {
 			const like = await likeService.likePost(userId, postId)
-			return res.status(201).json(like)
+			res.status(201).json(like)
 		} catch (error) {
-			return res.status(500).json({ error: 'Error liking post' })
+			res.status(500).json({ error: 'Error liking post' })
 		}
 	}
 
 	async unlikePost(req: Request, res: Response) {
-		const { postId, userId }: LikeDto = req.body
+		const postId = Number(req.params.postId)
+		const userId = (req as UserRequest).user.id
 
 		try {
 			await likeService.unlikePost(userId, postId)
-			return res.status(200).json({ message: 'Post unliked successfully' })
+			res.status(200).json({ message: 'Post unliked successfully' })
 		} catch (error) {
-			return res.status(500).json({ error: 'Error unliking post' })
+			res.status(500).json({ error: 'Error unliking post' })
 		}
 	}
 
 	async getLikesByPost(req: Request, res: Response) {
-		const postId = parseInt(req.params.postId)
+		const postId = Number(req.params.postId)
 
 		try {
 			const likes = await likeService.getLikesByPost(postId)
@@ -37,7 +38,7 @@ class LikeController {
 	}
 
 	async getLikesByUser(req: Request, res: Response) {
-		const userId = parseInt(req.params.userId)
+		const userId = (req as UserRequest).user.id
 
 		try {
 			const likes = await likeService.getLikesByUser(userId)
@@ -49,3 +50,7 @@ class LikeController {
 }
 
 export const likeController = new LikeController()
+
+interface UserRequest extends Request {
+	user: any
+}

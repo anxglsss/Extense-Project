@@ -6,7 +6,7 @@ interface UserRequest extends Request {
 }
 
 export const authMiddleware = async (
-	req: UserRequest,
+	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
@@ -19,8 +19,7 @@ export const authMiddleware = async (
 
 	try {
 		const user = await tokenService.verifyAccessToken(token)
-
-		req.user = user
+		;(req as UserRequest).user = user
 		next()
 	} catch (error) {
 		return res.status(403).json({ error: 'Invalid token' })

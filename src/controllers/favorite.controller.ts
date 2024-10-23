@@ -1,21 +1,22 @@
 import { Request, Response } from 'express'
-import { FavoriteDto } from '../dtos/favorite.dto'
 import { favoriteService } from '../services/favorite.service'
 
 class FavoriteController {
 	async favoritePost(req: Request, res: Response) {
-		const { postId, userId }: FavoriteDto = req.body
+		const postId = Number(req.params.postId)
+		const userId = (req as UserRequest).user.id
 
 		try {
 			const favorite = await favoriteService.favoritePost(userId, postId)
-			return res.status(201).json(favorite)
+			res.status(201).json(favorite)
 		} catch (error) {
-			return res.status(500).json({ error: 'Error favoriting post' })
+			res.status(500).json({ error: 'Error favoriting post' })
 		}
 	}
 
 	async unfavoritePost(req: Request, res: Response) {
-		const { postId, userId }: FavoriteDto = req.body
+		const postId = Number(req.params.postId)
+		const userId = (req as UserRequest).user.id
 
 		try {
 			await favoriteService.unfavoritePost(userId, postId)
@@ -49,3 +50,7 @@ class FavoriteController {
 }
 
 export const favoriteController = new FavoriteController()
+
+interface UserRequest extends Request {
+	user: any
+}
