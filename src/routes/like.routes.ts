@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { likeController } from '../controllers/like.controller'
 import { authMiddleware } from '../middlewares/auth.middleware'
 
-const likeRouter = Router()
+export const likeRouter = Router()
 
 likeRouter.post('/post/:postId', authMiddleware as any, likeController.likePost)
 
@@ -23,5 +23,3 @@ likeRouter.get(
 	authMiddleware as any,
 	likeController.getLikesByUser
 )
-
-export default likeRouter
