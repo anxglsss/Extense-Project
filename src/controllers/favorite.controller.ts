@@ -6,7 +6,7 @@ class FavoriteController {
 		const userId = (req as UserRequest).user.id
 		const postId = Number(req.params.postId)
 		try {
-			const favorite = await favoriteService.favoritePost(userId, postId)
+			const favorite = await favoriteService.favoritePost({ userId, postId })
 			res.status(201).json(favorite)
 		} catch (error) {
 			res.status(500).json(error)
@@ -16,7 +16,7 @@ class FavoriteController {
 		const userId = (req as UserRequest).user.id
 		const postId = Number(req.params.postId)
 		try {
-			await favoriteService.removeFromFavorite(userId, postId)
+			await favoriteService.removeFromFavorite({ userId, postId })
 			res.status(200).json({ message: 'Post Unliked' })
 		} catch (error) {
 			res.status(500).json(error)
