@@ -11,7 +11,19 @@ class FriendRequestService {
 				receiverId: request.receiverId,
 			},
 		})
-		if (existingRequest) {
+		const existingFriendship = await prisma.friendship.findFirst({
+			where: {
+				OR: [
+					{ user1Id: request.senderId, user2Id: request.receiverId },
+					{ user1Id: request.receiverId, user2Id: request.senderId },
+				],
+			},
+		})
+		if (
+			existingRequest ||
+			existingFriendship ||
+			request.senderId === request.receiverId
+		) {
 			throw new Error('Request already exists')
 		}
 		return await prisma.friendRequest.create({
@@ -39,7 +51,7 @@ class FriendRequestService {
 		})
 	}
 	async responseToRequest(requestId: number, status: 'REJECTED' | 'ACCEPTED') {
-		await prisma.friendRequest.update({
+		const request = await prisma.friendRequest.update({
 			where: { id: requestId },
 			data: {
 				status,
@@ -49,6 +61,14 @@ class FriendRequestService {
 				sender: true,
 			},
 		})
+		if (status === 'ACCEPTED') {
+			await prisma.friendship.create({
+				data: {
+					user1Id: request.senderId,
+					user2Id: request.receiverId,
+				},
+			})
+		}
 	}
 	async getPendingRequests(userId: number) {
 		return await prisma.friendRequest.findMany({
@@ -100,6 +120,9 @@ class FriendRequestService {
 				},
 			},
 		})
+	}
+	async deleteRequest(requestId: number) {
+		return await prisma.friendRequest.delete({ where: { id: requestId } })
 	}
 }
 
