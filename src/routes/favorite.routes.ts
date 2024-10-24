@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { favoriteController } from '../controllers/favorite.controller'
 import { authMiddleware } from '../middlewares/auth.middleware'
 
-const favoriteRouter = Router()
+export const favoriteRouter = Router()
 
 favoriteRouter.post(
 	'/post/:postId',
@@ -19,5 +19,3 @@ favoriteRouter.delete(
 favoriteRouter.get('/post/:postId', favoriteController.getFavoritesByPost)
 
 favoriteRouter.get('/user/:userId', favoriteController.getFavoritesByUser)
-
-export default favoriteRouter

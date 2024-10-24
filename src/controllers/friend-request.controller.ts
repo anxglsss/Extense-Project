@@ -2,11 +2,10 @@ import { Request, Response } from 'express'
 import { friendRequestService } from '../services/friend-request.service'
 
 class FriendRequestController {
-	async sendRequest(req: UserRequest, res: Response) {
+	async sendRequest(req: Request, res: Response) {
+		const senderId = (req as UserRequest).user.id
+		const receiverId = Number(req.params.receiverId)
 		try {
-			const senderId = (req as UserRequest).user.id
-			const receiverId = Number(req.params.receiverId)
-
 			const request = await friendRequestService.sendRequest({
 				senderId,
 				receiverId,
@@ -27,7 +26,7 @@ class FriendRequestController {
 			res.status(400).json(error)
 		}
 	}
-	async getPendingRequests(req: UserRequest, res: Response) {
+	async getPendingRequests(req: Request, res: Response) {
 		try {
 			const requests = await friendRequestService.getPendingRequests(
 				(req as UserRequest).user.id
@@ -47,7 +46,7 @@ class FriendRequestController {
 			res.status(400).json(error)
 		}
 	}
-	async getSendRequests(req: UserRequest, res: Response) {
+	async getSendRequests(req: Request, res: Response) {
 		try {
 			const requests = await friendRequestService.getSendRequests(
 				(req as UserRequest).user.id

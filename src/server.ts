@@ -1,8 +1,10 @@
 import express, { Request, Response } from 'express'
 import { authRouter } from './routes/auth.routes'
 import { commentRouter } from './routes/comment.routes'
-import favoriteRouter from './routes/favorite.routes'
-import likeRouter from './routes/like.routes'
+import { favoriteRouter } from './routes/favorite.routes'
+import { friendRequestRouter } from './routes/friend-request.routes'
+import { friendshipRouter } from './routes/friendship.routes'
+import { likeRouter } from './routes/like.routes'
 import { postRouter } from './routes/post.routes'
 import { userRouter } from './routes/user.routes'
 
@@ -21,6 +23,8 @@ app.use('/api/post', postRouter)
 app.use('/api/comment', commentRouter)
 app.use('/api/like', likeRouter)
 app.use('/api/favorite', favoriteRouter)
+app.use('/api/friend-request', friendRequestRouter)
+app.use('/api/friendship', friendshipRouter)
 
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`)
