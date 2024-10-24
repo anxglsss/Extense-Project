@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+
 import { FavoriteDto } from '../dtos/favorite.dto'
 
 const prisma = new PrismaClient()

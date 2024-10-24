@@ -48,7 +48,6 @@ class CommentController {
 
 	async deleteComment(req: Request, res: Response) {
 		const commentId = Number(req.params.id)
-
 		try {
 			await commentService.deleteComment(commentId)
 			res.status(204).json({ message: 'Comment deleted successfully' })

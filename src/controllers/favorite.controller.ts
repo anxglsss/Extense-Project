@@ -44,6 +44,7 @@ class FavoriteController {
 }
 
 export const favoriteController = new FavoriteController()
+
 interface UserRequest extends Request {
 	user: any
 }
