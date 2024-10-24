@@ -1,22 +1,23 @@
 import { PrismaClient } from '@prisma/client'
+import { FavoriteDto } from '../dtos/favorite.dto'
 
 const prisma = new PrismaClient()
 
 class FavoriteService {
-	async favoritePost(userId: number, postId: number) {
+	async favoritePost(favorite: FavoriteDto) {
 		return await prisma.favorite.create({
 			data: {
-				userId,
-				postId,
+				userId: favorite.userId,
+				postId: favorite.postId,
 			},
 		})
 	}
 
-	async removeFromFavorite(userId: number, postId: number) {
+	async removeFromFavorite(favorite: FavoriteDto) {
 		await prisma.favorite.deleteMany({
 			where: {
-				userId,
-				postId,
+				userId: favorite.userId,
+				postId: favorite.postId,
 			},
 		})
 	}
