@@ -18,12 +18,7 @@ class AuthService {
 		await prisma.user.update({
 			where: { id: existingUser.id },
 			data: {
-				refreshToken: {
-					create: {
-						token: refreshToken,
-						expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-					},
-				},
+				refreshToken,
 			},
 		})
 
@@ -44,6 +39,7 @@ class AuthService {
 				email: user.email,
 				password: user.password,
 				role: 'USER',
+				avatarUrl: '',
 			},
 		})
 		const accessToken = tokenService.generateAccessToken(newUser.id)
@@ -52,12 +48,7 @@ class AuthService {
 		await prisma.user.update({
 			where: { id: newUser.id },
 			data: {
-				refreshToken: {
-					create: {
-						token: refreshToken,
-						expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-					},
-				},
+				refreshToken,
 			},
 		})
 

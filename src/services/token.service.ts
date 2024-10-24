@@ -14,9 +14,18 @@ class TokenService {
 		return jwt.sign({ userId }, REFRESH_TOKEN_SECRET, { expiresIn: '7d' })
 	}
 
-	verifyAccessToken(token: string) {
+	async verifyAccessToken(token: string) {
 		try {
-			return jwt.verify(token, ACCESS_TOKEN_SECRET)
+			const payload = jwt.verify(token, ACCESS_TOKEN_SECRET) as {
+				userId: number
+			}
+			if (!payload) throw new Error('Invalid token')
+			const user = await prisma.user.findUnique({
+				where: { id: payload.userId },
+				select: { id: true, name: true, email: true, role: true },
+			})
+
+			return user
 		} catch (error) {
 			throw new Error('Invalid token')
 		}
@@ -29,9 +38,8 @@ class TokenService {
 			}
 			const user = await prisma.user.findUnique({
 				where: { id: payload.userId },
-				include: { refreshToken: true },
 			})
-			if (!user || (user.refreshToken && user.refreshToken.token !== token)) {
+			if (!user || (user.refreshToken && user.refreshToken !== token)) {
 				throw new Error('Invalid token')
 			}
 			return user
@@ -43,10 +51,12 @@ class TokenService {
 	async revokeRefreshToken(userId: number) {
 		const user = await prisma.user.findUnique({
 			where: { id: userId },
-			include: { refreshToken: true },
 		})
 		if (user && user.refreshToken) {
-			await prisma.refreshToken.delete({ where: { id: user.refreshToken.id } })
+			await prisma.user.update({
+				where: { id: userId },
+				data: { refreshToken: '' },
+			})
 		}
 	}
 }
