@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
-import { FavoriteDto } from '../dtos/favorite.dto'
 import { favoriteService } from '../services/favorite.service'
 
 class FavoriteController {
 	async favoritePost(req: Request, res: Response) {
-		const { userId, postId }: FavoriteDto = req.body
+		const userId = (req as UserRequest).user.id
+		const postId = Number(req.params.postId)
 		try {
 			const favorite = await favoriteService.favoritePost(userId, postId)
 			res.status(201).json(favorite)
@@ -13,7 +13,8 @@ class FavoriteController {
 		}
 	}
 	async removeFromFavorite(req: Request, res: Response) {
-		const { userId, postId }: FavoriteDto = req.body
+		const userId = (req as UserRequest).user.id
+		const postId = Number(req.params.postId)
 		try {
 			await favoriteService.removeFromFavorite(userId, postId)
 			res.status(200).json({ message: 'Post Unliked' })
@@ -22,7 +23,7 @@ class FavoriteController {
 		}
 	}
 	async getFavoritesByPost(req: Request, res: Response) {
-		const { postId } = req.params
+		const postId = Number(req.params.postId)
 		try {
 			const favorites = await favoriteService.getFavoritesByPost(Number(postId))
 			res.status(200).json(favorites)
@@ -31,7 +32,8 @@ class FavoriteController {
 		}
 	}
 	async getFavoritesByUser(req: Request, res: Response) {
-		const { userId } = req.params
+		const userId = (req as UserRequest).user.id
+
 		try {
 			const favorites = await favoriteService.getFavoritesByUser(Number(userId))
 			res.status(200).json(favorites)
@@ -41,4 +43,7 @@ class FavoriteController {
 	}
 }
 
-export const likeController = new FavoriteController()
+export const favoriteController = new FavoriteController()
+interface UserRequest extends Request {
+	user: any
+}
