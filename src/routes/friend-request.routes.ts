@@ -29,3 +29,8 @@ friendRequestRouter.get(
 	authMiddleware as any,
 	friendRequestController.getSendRequests
 )
+friendRequestRouter.delete(
+	'/:requestId',
+	authMiddleware as any,
+	friendRequestController.deleteRequest
+)

@@ -57,6 +57,14 @@ class FriendRequestController {
 			res.status(400).json(error)
 		}
 	}
+	async deleteRequest(req: Request, res: Response) {
+		try {
+			await friendRequestService.deleteRequest(Number(req.params.requestId))
+			res.status(200).json({ message: 'Request deleted' })
+		} catch (error) {
+			res.status(400).json(error)
+		}
+	}
 }
 export const friendRequestController = new FriendRequestController()
 
