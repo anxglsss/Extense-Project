@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { friendshipService } from '../services/friendship.service'
 
 class FriendshipController {
-	async getFriends(req: UserRequest, res: Response) {
+	async getFriends(req: Request, res: Response) {
 		try {
 			const friends = await friendshipService.getFriends(
 				(req as UserRequest).user.id

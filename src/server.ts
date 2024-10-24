@@ -11,7 +11,7 @@ import { userRouter } from './routes/user.routes'
 const app = express()
 app.use(express.json())
 
-const PORT = 4400
+const PORT = 5200
 
 app.get('/', (req: Request, res: Response) => {
 	res.send('Hello World!')

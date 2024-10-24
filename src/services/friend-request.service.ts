@@ -21,8 +21,20 @@ class FriendRequestService {
 				status: 'PENDING',
 			},
 			include: {
-				receiver: true,
-				sender: true,
+				receiver: {
+					select: {
+						id: true,
+						name: true,
+						avatarUrl: true,
+					},
+				},
+				sender: {
+					select: {
+						id: true,
+						name: true,
+						avatarUrl: true,
+					},
+				},
 			},
 		})
 	}
@@ -76,9 +88,16 @@ class FriendRequestService {
 		return await prisma.friendRequest.findMany({
 			where: {
 				senderId: userId,
+				status: 'PENDING',
 			},
 			include: {
-				receiver: true,
+				receiver: {
+					select: {
+						id: true,
+						name: true,
+						avatarUrl: true,
+					},
+				},
 			},
 		})
 	}
