@@ -5,6 +5,15 @@ const prisma = new PrismaClient()
 
 class FriendRequestService {
 	async sendRequest(request: FriendRequestDto) {
+		const existingRequest = await prisma.friendRequest.findFirst({
+			where: {
+				senderId: request.senderId,
+				receiverId: request.receiverId,
+			},
+		})
+		if (existingRequest) {
+			throw new Error('Request already exists')
+		}
 		return await prisma.friendRequest.create({
 			data: {
 				senderId: request.senderId,
@@ -36,7 +45,30 @@ class FriendRequestService {
 				status: 'PENDING',
 			},
 			include: {
-				sender: true,
+				sender: {
+					select: {
+						id: true,
+						name: true,
+						avatarUrl: true,
+					},
+				},
+			},
+		})
+	}
+	async getAcceptedRequests(userId: number) {
+		return await prisma.friendRequest.findMany({
+			where: {
+				receiverId: userId,
+				status: 'ACCEPTED',
+			},
+			include: {
+				sender: {
+					select: {
+						id: true,
+						name: true,
+						avatarUrl: true,
+					},
+				},
 			},
 		})
 	}
