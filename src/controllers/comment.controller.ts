@@ -3,7 +3,7 @@ import { CreateCommentDto, UpdateCommentDto } from '../dtos/comment.dto'
 import { commentService } from '../services/comment.service'
 
 class CommentController {
-	async getCommentsByPost(req: Request, res: Response) {
+	async getCommentsByPostId(req: Request, res: Response) {
 		try {
 			const comments = await commentService.getCommentsByPostId(
 				Number(req.params.postId)
@@ -15,8 +15,8 @@ class CommentController {
 	}
 
 	async createComment(req: Request, res: Response) {
-		const userId = parseInt(req.body.userId)
-		const postId = parseInt(req.params.postId)
+		const userId = (req as UserRequest).user.id
+		const postId = Number(req.params.postId)
 		const commentData: CreateCommentDto = req.body
 
 		try {
@@ -32,7 +32,7 @@ class CommentController {
 	}
 
 	async updateComment(req: Request, res: Response) {
-		const commentId = parseInt(req.params.id)
+		const commentId = Number(req.params.id)
 		const updatedData: UpdateCommentDto = req.body
 
 		try {
@@ -47,8 +47,7 @@ class CommentController {
 	}
 
 	async deleteComment(req: Request, res: Response) {
-		const commentId = parseInt(req.params.id)
-
+		const commentId = Number(req.params.id)
 		try {
 			await commentService.deleteComment(commentId)
 			res.status(204).json({ message: 'Comment deleted successfully' })
@@ -59,3 +58,7 @@ class CommentController {
 }
 
 export const commentController = new CommentController()
+
+interface UserRequest extends Request {
+	user: any
+}

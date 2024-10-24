@@ -18,7 +18,7 @@ model User {
   email     String  @unique
   name      String?
   role      Role
-  avatarUrl String
+  avatarUrl String?
   password  String
 
   posts                 Post[]          @relation
@@ -86,23 +86,23 @@ model Favorite {
 }
 
 model Friendship {
-  id      Int    @id @default(autoincrement())
-  user1   User   @relation("FriendUser1", fields: [user1Id], references: [id])
+  id      Int  @id @default(autoincrement())
+  user1   User @relation("FriendUser1", fields: [user1Id], references: [id])
   user1Id Int
-  user2   User   @relation("FriendUser2", fields: [user2Id], references: [id])
+  user2   User @relation("FriendUser2", fields: [user2Id], references: [id])
   user2Id Int
-  status  Status @default(PENDING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model FriendRequest {
-  id         String @id @default(uuid())
+  id         Int    @id @default(autoincrement())
   sender     User   @relation("SentRequest", fields: [senderId], references: [id])
   senderId   Int
   receiver   User   @relation("ReceiveRequest", fields: [receiverId], references: [id])
   receiverId Int
+  status     Status @default(PENDING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

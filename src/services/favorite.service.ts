@@ -1,60 +1,48 @@
 import { PrismaClient } from '@prisma/client'
 
+import { FavoriteDto } from '../dtos/favorite.dto'
+
 const prisma = new PrismaClient()
 
 class FavoriteService {
-	async favoritePost(userId: number, postId: number) {
+	async favoritePost(favorite: FavoriteDto) {
 		return await prisma.favorite.create({
 			data: {
-				userId,
-				postId,
+				userId: favorite.userId,
+				postId: favorite.postId,
 			},
 		})
 	}
 
-	async unfavoritePost(userId: number, postId: number) {
-		return await prisma.favorite.deleteMany({
+	async removeFromFavorite(favorite: FavoriteDto) {
+		await prisma.favorite.deleteMany({
 			where: {
-				userId,
-				postId,
+				userId: favorite.userId,
+				postId: favorite.postId,
 			},
 		})
 	}
 
 	async getFavoritesByPost(postId: number) {
-		const favorites = await prisma.favorite.findMany({
+		return await prisma.favorite.findMany({
 			where: {
 				postId,
 			},
 			include: {
-				user: {
-					select: {
-						id: true,
-						name: true,
-						avatarUrl: true,
-					},
-				},
+				user: { select: { id: true, name: true, avatarUrl: true } },
 			},
 		})
-		return favorites
 	}
 
 	async getFavoritesByUser(userId: number) {
-		const favorites = await prisma.favorite.findMany({
+		return await prisma.favorite.findMany({
 			where: {
 				userId,
 			},
 			include: {
-				post: {
-					select: {
-						id: true,
-						title: true,
-						imageUrl: true,
-					},
-				},
+				post: { select: { id: true, title: true } },
 			},
 		})
-		return favorites
 	}
 }
 

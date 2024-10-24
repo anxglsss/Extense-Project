@@ -1,22 +1,23 @@
 import { PrismaClient } from '@prisma/client'
+import { LikeDto } from '../dtos/like.dto'
 
 const prisma = new PrismaClient()
 
 class LikeService {
-	async likePost(userId: number, postId: number) {
+	async likePost(like: LikeDto) {
 		return await prisma.like.create({
 			data: {
-				userId,
-				postId,
+				userId: like.userId,
+				postId: like.postId,
 			},
 		})
 	}
 
-	async unlikePost(userId: number, postId: number) {
+	async unlikePost(like: LikeDto) {
 		return await prisma.like.deleteMany({
 			where: {
-				userId,
-				postId,
+				userId: like.userId,
+				postId: like.postId,
 			},
 		})
 	}
