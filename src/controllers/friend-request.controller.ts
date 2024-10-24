@@ -5,6 +5,7 @@ class FriendRequestController {
 	async sendRequest(req: Request, res: Response) {
 		const senderId = (req as UserRequest).user.id
 		const receiverId = Number(req.params.receiverId)
+
 		try {
 			const request = await friendRequestService.sendRequest({
 				senderId,
@@ -17,11 +18,11 @@ class FriendRequestController {
 	}
 	async responseToRequest(req: Request, res: Response) {
 		try {
-			const response = await friendRequestService.responseToRequest(
+			await friendRequestService.responseToRequest(
 				Number(req.params.requestId),
 				req.body.status
 			)
-			res.status(200).json(response)
+			res.status(200).json({ message: 'Request status changed' })
 		} catch (error) {
 			res.status(400).json(error)
 		}
@@ -36,7 +37,7 @@ class FriendRequestController {
 			res.status(400).json(error)
 		}
 	}
-	async getAcceptedRequests(req: UserRequest, res: Response) {
+	async getAcceptedRequests(req: Request, res: Response) {
 		try {
 			const requests = await friendRequestService.getAcceptedRequests(
 				(req as UserRequest).user.id
