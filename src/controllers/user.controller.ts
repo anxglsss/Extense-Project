@@ -37,6 +37,23 @@ class UserController {
 			res.status(404).json(error)
 		}
 	}
+
+	async setAvatar(req: Request, res: Response) {
+		try {
+			const user = await userService.setAvatarUrl(
+				Number(req.params.id),
+				(req as UserRequest).file.location
+			)
+			res.status(200).json(user)
+		} catch (error) {
+			res.status(404).json(error)
+		}
+	}
 }
 
 export const userController = new UserController()
+
+interface UserRequest extends Request {
+	user: any
+	file: any
+}

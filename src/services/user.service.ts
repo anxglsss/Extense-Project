@@ -21,6 +21,10 @@ class UserService {
 	async deleteUser(id: number) {
 		return await prisma.user.delete({ where: { id } })
 	}
+
+	async setAvatarUrl(id: number, avatarUrl: string) {
+		return await prisma.user.update({ where: { id }, data: { avatarUrl } })
+	}
 }
 
 export const userService = new UserService()
