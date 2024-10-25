@@ -61,12 +61,12 @@ class PostService {
 		})
 	}
 
-	async createPost(post: CreatePostDto, userId: number) {
+	async createPost(post: CreatePostDto, userId: number, imageUrl: string) {
 		return await prisma.post.create({
 			data: {
 				title: post.title,
 				content: post.content,
-				imageUrl: post.imageUrl,
+				imageUrl: imageUrl,
 				userId: userId,
 			},
 		})

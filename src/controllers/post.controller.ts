@@ -24,7 +24,8 @@ class PostController {
 		try {
 			const createdPost = await postService.createPost(
 				req.body,
-				(req as UserRequest).user.id
+				(req as UserRequest).user.id,
+				(req as UserRequest).file.location
 			)
 			res.status(201).json(createdPost)
 		} catch (error) {
@@ -58,4 +59,5 @@ export const postController = new PostController()
 
 interface UserRequest extends Request {
 	user: any
+	file: any
 }
