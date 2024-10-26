@@ -1,15 +1,16 @@
 model FriendRequest {
     id         Int    @id @default(autoincrement())
     sender     User   @relation("SentRequest", fields: [senderId], references: [id])
-    senderId   Int
+    senderId   Int    @map("sender_id")
     receiver   User   @relation("ReceiveRequest", fields: [receiverId], references: [id])
-    receiverId Int
+    receiverId Int    @map("receiver_id")
     status     Status @default(PENDING)
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
 
     @@unique([senderId, receiverId])
+    @@map("friend_request")
 }
 
 enum Status {

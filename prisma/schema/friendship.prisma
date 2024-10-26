@@ -1,10 +1,12 @@
 model Friendship {
     id      Int  @id @default(autoincrement())
     user1   User @relation("FriendUser1", fields: [user1Id], references: [id])
-    user1Id Int
+    user1Id Int  @map("user1_id")
     user2   User @relation("FriendUser2", fields: [user2Id], references: [id])
-    user2Id Int
+    user2Id Int  @map("user2_id")
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@map("friendship")
 }

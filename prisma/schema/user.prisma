@@ -3,23 +3,23 @@ model User {
     email     String  @unique
     name      String?
     role      Role
-    avatarUrl String?
+    avatarUrl String? @map("avatar_url")
     password  String
 
     posts                 Post[]          @relation
     comments              Comment[]       @relation
     likes                 Like[]          @relation
     favorites             Favorite[]      @relation
-    friendRequestSent     FriendRequest[] @relation("SentRequest")
-    friendRequestReceived FriendRequest[] @relation("ReceiveRequest")
+    friendRequestSent     FriendRequest[] @relation("SentRequest", map: "friend_request_send")
+    friendRequestReceived FriendRequest[] @relation("ReceiveRequest", map: "friend_request_received")
     friendship1           Friendship[]    @relation("FriendUser1")
     friendship2           Friendship[]    @relation("FriendUser2")
-    refreshToken          String?
+    refreshToken          String?         @map("refresh_token")
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
 
-    @@map("users")
+    @@map("user")
 }
 
 enum Role {
