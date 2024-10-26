@@ -1,0 +1,28 @@
+model User {
+    id        Int     @id @default(autoincrement())
+    email     String  @unique
+    name      String?
+    role      Role
+    avatarUrl String?
+    password  String
+
+    posts                 Post[]          @relation
+    comments              Comment[]       @relation
+    likes                 Like[]          @relation
+    favorites             Favorite[]      @relation
+    friendRequestSent     FriendRequest[] @relation("SentRequest")
+    friendRequestReceived FriendRequest[] @relation("ReceiveRequest")
+    friendship1           Friendship[]    @relation("FriendUser1")
+    friendship2           Friendship[]    @relation("FriendUser2")
+    refreshToken          String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("users")
+}
+
+enum Role {
+    ADMIN
+    USER
+}

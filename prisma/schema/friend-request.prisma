@@ -1,0 +1,19 @@
+model FriendRequest {
+    id         Int    @id @default(autoincrement())
+    sender     User   @relation("SentRequest", fields: [senderId], references: [id])
+    senderId   Int
+    receiver   User   @relation("ReceiveRequest", fields: [receiverId], references: [id])
+    receiverId Int
+    status     Status @default(PENDING)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([senderId, receiverId])
+}
+
+enum Status {
+    PENDING
+    ACCEPTED
+    REJECTED
+}
