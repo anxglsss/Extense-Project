@@ -1,0 +1,10 @@
+model Favorite {
+    id     Int  @id @default(autoincrement())
+    post   Post @relation(fields: [postId], references: [id])
+    postId Int
+    user   User @relation(fields: [userId], references: [id])
+    userId Int
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
