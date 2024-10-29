@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 class TokenService {
 	generateAccessToken(userId: number) {
 		return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET!, {
-			expiresIn: '15m',
+			expiresIn: '1d',
 		})
 	}
 

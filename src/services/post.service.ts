@@ -28,6 +28,9 @@ class PostService {
 				favorite: {
 					select: { id: true, userId: true, postId: true },
 				},
+				tags: {
+					select: { id: true, name: true },
+				},
 			},
 		})
 	}
@@ -57,6 +60,9 @@ class PostService {
 				favorite: {
 					select: { id: true, userId: true, postId: true },
 				},
+				tags: {
+					select: { id: true, name: true },
+				},
 			},
 		})
 	}
@@ -85,6 +91,192 @@ class PostService {
 		await prisma.post.delete({
 			where: {
 				id,
+			},
+		})
+	}
+
+	//Filtration
+
+	async getPostsByDateRecent() {
+		return await prisma.post.findMany({
+			orderBy: {
+				createdAt: 'desc',
+			},
+			include: {
+				user: {
+					select: {
+						id: true,
+						name: true,
+						avatarUrl: true,
+					},
+				},
+				comments: {
+					select: {
+						id: true,
+						content: true,
+						userId: true,
+						postId: true,
+					},
+				},
+				likes: {
+					select: { id: true, userId: true, postId: true },
+				},
+				favorite: {
+					select: { id: true, userId: true, postId: true },
+				},
+				tags: {
+					select: { id: true, name: true },
+				},
+			},
+		})
+	}
+
+	async getPostsByDateLate() {
+		return await prisma.post.findMany({
+			orderBy: {
+				createdAt: 'asc',
+			},
+			include: {
+				user: {
+					select: {
+						id: true,
+						name: true,
+						avatarUrl: true,
+					},
+				},
+				comments: {
+					select: {
+						id: true,
+						content: true,
+						userId: true,
+						postId: true,
+					},
+				},
+				likes: {
+					select: { id: true, userId: true, postId: true },
+				},
+				favorite: {
+					select: { id: true, userId: true, postId: true },
+				},
+				tags: {
+					select: { id: true, name: true },
+				},
+			},
+		})
+	}
+
+	async getPostsByLikes() {
+		return await prisma.post.findMany({
+			orderBy: {
+				likes: {
+					_count: 'desc',
+				},
+			},
+			include: {
+				user: {
+					select: {
+						id: true,
+						name: true,
+						avatarUrl: true,
+					},
+				},
+				comments: {
+					select: {
+						id: true,
+						content: true,
+						userId: true,
+						postId: true,
+					},
+				},
+				likes: {
+					select: { id: true, userId: true, postId: true },
+				},
+				favorite: {
+					select: { id: true, userId: true, postId: true },
+				},
+				tags: {
+					select: { id: true, name: true },
+				},
+			},
+		})
+	}
+
+	async getPostsByFavorites() {
+		return await prisma.post.findMany({
+			orderBy: {
+				favorite: {
+					_count: 'desc',
+				},
+			},
+			include: {
+				user: {
+					select: {
+						id: true,
+						name: true,
+						avatarUrl: true,
+					},
+				},
+				comments: {
+					select: {
+						id: true,
+						content: true,
+						userId: true,
+						postId: true,
+					},
+				},
+				likes: {
+					select: { id: true, userId: true, postId: true },
+				},
+				favorite: {
+					select: { id: true, userId: true, postId: true },
+				},
+				tags: {
+					select: { id: true, name: true },
+				},
+			},
+		})
+	}
+
+	async getPostsByFriends(friendId: number[]) {
+		return await prisma.post.findMany({
+			where: {
+				userId: {
+					in: friendId,
+				},
+			},
+			include: {
+				user: {
+					select: {
+						id: true,
+						name: true,
+						avatarUrl: true,
+					},
+				},
+				comments: {
+					select: {
+						id: true,
+						content: true,
+						userId: true,
+						postId: true,
+					},
+				},
+				likes: {
+					select: { id: true, userId: true, postId: true },
+				},
+				favorite: {
+					select: { id: true, userId: true, postId: true },
+				},
+				tags: {
+					select: { id: true, name: true },
+				},
+			},
+		})
+	}
+
+	async getPostsByContainsImage(hasImage: boolean) {
+		return await prisma.post.findMany({
+			where: {
+				imageUrl: hasImage ? { not: null } : null,
 			},
 		})
 	}
