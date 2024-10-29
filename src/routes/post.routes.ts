@@ -23,3 +23,18 @@ postRouter.put(
 	postController.updatePost
 )
 postRouter.delete('/:id', authMiddleware as any, postController.deletePost)
+
+postRouter.get('/sort/date/recent', postController.getPostsByDateRecent)
+postRouter.get('/sort/date/oldest', postController.getPostsByDateOldest)
+postRouter.get('/sort/likes', postController.getPostsByLikes)
+postRouter.get('/sort/favorites', postController.getPostsByFavorites)
+postRouter.get(
+	'/filter/friends',
+	authMiddleware as any,
+	postController.getPostsByFriends
+)
+postRouter.get('/filter/containsImage', postController.getPostsByContainsImage)
+postRouter.get(
+	'/filter/notContainsImage',
+	postController.getPostsByNotContainsImage
+)

@@ -9,10 +9,14 @@ export const uploadToS3 = (bucketName: string, fileName: string) => {
 			s3: s3,
 			bucket: bucketName,
 			key: (req, file, cb) => {
-				cb(null, Date.now().toString() + '-' + file.originalname)
+				cb(null, `${Date.now()}-${file.originalname}`)
 			},
 		}),
-	}).single(fileName)
+	}).fields([
+		{ name: fileName, maxCount: 1 },
+		{ name: 'title', maxCount: 1 },
+		{ name: 'content', maxCount: 1 },
+	])
 
 	return (req: Request, res: Response, next: NextFunction) => {
 		upload(req, res, error => {
