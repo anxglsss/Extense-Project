@@ -30,6 +30,20 @@ class AuthController {
 			res.status(500).json({ error: error })
 		}
 	}
+
+	async refreshToken(req: Request, res: Response) {
+		try {
+			const { refreshToken } = req.body
+			if (!refreshToken) {
+				res.status(400).json({ message: 'Refrsh token required' })
+				return
+			}
+			const newTokens = await authService.refreshToken(refreshToken)
+			res.json(newTokens)
+		} catch (error) {
+			res.status(401).json({ message: 'Invalid refresh token' })
+		}
+	}
 }
 
 export const authController = new AuthController()

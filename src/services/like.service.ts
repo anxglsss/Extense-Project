@@ -5,6 +5,15 @@ const prisma = new PrismaClient()
 
 class LikeService {
 	async likePost(like: LikeDto) {
+		const existingLike = await prisma.like.findFirst({
+			where: {
+				userId: like.userId,
+				postId: like.postId,
+			},
+		})
+		if (existingLike) {
+			throw new Error('User has already liked this post')
+		}
 		return await prisma.like.create({
 			data: {
 				userId: like.userId,

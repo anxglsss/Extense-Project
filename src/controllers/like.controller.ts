@@ -8,7 +8,6 @@ class LikeController {
 
 		try {
 			const like = await likeService.likePost({ userId, postId })
-
 			res.status(201).json(like)
 		} catch (error) {
 			res.status(500).json({ error: 'Error liking post' })
@@ -21,7 +20,6 @@ class LikeController {
 
 		try {
 			await likeService.unlikePost({ userId, postId })
-
 			res.status(200).json({ message: 'Post unliked successfully' })
 		} catch (error) {
 			res.status(500).json({ error: 'Error unliking post' })

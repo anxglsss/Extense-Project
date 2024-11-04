@@ -22,6 +22,7 @@ class TokenService {
 				userId: number
 			}
 			if (!payload) throw new Error('Invalid token')
+				
 			const user = await prisma.user.findUnique({
 				where: { id: payload.userId },
 				select: { id: true, name: true, email: true, role: true },
