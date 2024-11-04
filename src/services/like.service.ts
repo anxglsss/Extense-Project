@@ -1,5 +1,5 @@
+import { LikeDto } from '@/dtos/like.dto'
 import { PrismaClient } from '@prisma/client'
-import { LikeDto } from '../dtos/like.dto'
 
 const prisma = new PrismaClient()
 

@@ -1,6 +1,6 @@
+import { userController } from '@/controllers/user.controller'
+import { uploadToS3 } from '@/middlewares/upload.middleware'
 import { Router } from 'express'
-import { userController } from '../controllers/user.controller'
-import { uploadToS3 } from '../middlewares/upload.middleware'
 
 export const userRouter = Router()
 

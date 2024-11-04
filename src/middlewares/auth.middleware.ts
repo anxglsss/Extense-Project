@@ -1,5 +1,5 @@
+import { tokenService } from '@/services/token.service'
 import { NextFunction, Request, Response } from 'express'
-import { tokenService } from '../services/token.service'
 
 interface UserRequest extends Request {
 	user?: any

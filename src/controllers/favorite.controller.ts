@@ -1,5 +1,5 @@
+import { favoriteService } from '@/services/favorite.service'
 import { Request, Response } from 'express'
-import { favoriteService } from '../services/favorite.service'
 
 class FavoriteController {
 	async favoritePost(req: Request, res: Response) {

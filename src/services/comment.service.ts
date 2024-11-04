@@ -1,5 +1,5 @@
+import { CreateCommentDto, UpdateCommentDto } from '@/dtos/comment.dto'
 import { PrismaClient } from '@prisma/client'
-import { CreateCommentDto, UpdateCommentDto } from '../dtos/comment.dto'
 
 const prisma = new PrismaClient()
 

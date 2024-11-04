@@ -1,5 +1,5 @@
+import { friendshipService } from '@/services/friendship.service'
 import { Request, Response } from 'express'
-import { friendshipService } from '../services/friendship.service'
 
 class FriendshipController {
 	async getFriends(req: Request, res: Response) {

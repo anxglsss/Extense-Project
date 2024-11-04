@@ -1,6 +1,6 @@
+import { friendRequestController } from '@/controllers/friend-request.controller'
+import { authMiddleware } from '@/middlewares/auth.middleware'
 import { Router } from 'express'
-import { friendRequestController } from '../controllers/friend-request.controller'
-import { authMiddleware } from '../middlewares/auth.middleware'
 
 export const friendRequestRouter = Router()
 

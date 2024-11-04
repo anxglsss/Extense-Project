@@ -1,8 +1,8 @@
+import { authController } from '@/controllers/auth.controller'
+import { authMiddleware } from '@/middlewares/auth.middleware'
+import { validationMiddleware } from '@/middlewares/validation.middleware'
 import { Router } from 'express'
-import { authController } from '../controllers/auth.controller'
 import { LoginUserSchema, RegisterUserSchema } from '../dtos/user.dto'
-import { authMiddleware } from '../middlewares/auth.middleware'
-import { validationMiddleware } from '../middlewares/validation.middleware'
 
 export const authRouter = Router()
 
