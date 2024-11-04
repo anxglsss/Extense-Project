@@ -1,5 +1,5 @@
+import { postService } from '@/services/post.service'
 import { Request, Response } from 'express'
-import { postService } from '../services/post.service'
 
 class PostController {
 	async getAllPosts(req: Request, res: Response) {

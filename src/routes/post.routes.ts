@@ -1,9 +1,9 @@
+import { postController } from '@/controllers/post.controller'
+import { CreatePostSchema, UpdatePostSchema } from '@/dtos/post.dto'
+import { authMiddleware } from '@/middlewares/auth.middleware'
+import { uploadToS3 } from '@/middlewares/upload.middleware'
+import { validationMiddleware } from '@/middlewares/validation.middleware'
 import { Router } from 'express'
-import { postController } from '../controllers/post.controller'
-import { CreatePostSchema, UpdatePostSchema } from '../dtos/post.dto'
-import { authMiddleware } from '../middlewares/auth.middleware'
-import { uploadToS3 } from '../middlewares/upload.middleware'
-import { validationMiddleware } from '../middlewares/validation.middleware'
 
 export const postRouter = Router()
 

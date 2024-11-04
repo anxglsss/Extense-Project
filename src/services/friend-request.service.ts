@@ -1,5 +1,5 @@
+import { FriendRequestDto } from '@/dtos/friend-request.dto'
 import { PrismaClient } from '@prisma/client'
-import { FriendRequestDto } from '../dtos/friend-request.dto'
 
 const prisma = new PrismaClient()
 

@@ -1,7 +1,6 @@
+import { LoginUserDto, RegisterUserDto } from '@/dtos/user.dto'
+import { tokenService } from '@/services/token.service'
 import { PrismaClient } from '@prisma/client'
-import { LoginUserDto, RegisterUserDto } from '../dtos/user.dto'
-import { tokenService } from './token.service'
-
 const prisma = new PrismaClient()
 
 class AuthService {

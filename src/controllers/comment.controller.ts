@@ -1,6 +1,6 @@
+import { CreateCommentDto, UpdateCommentDto } from '@/dtos/comment.dto'
+import { commentService } from '@/services/comment.service'
 import { Request, Response } from 'express'
-import { CreateCommentDto, UpdateCommentDto } from '../dtos/comment.dto'
-import { commentService } from '../services/comment.service'
 
 class CommentController {
 	async getCommentsByPostId(req: Request, res: Response) {

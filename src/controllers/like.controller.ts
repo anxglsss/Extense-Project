@@ -1,5 +1,5 @@
+import { likeService } from '@/services/like.service'
 import { Request, Response } from 'express'
-import { likeService } from '../services/like.service'
 
 class LikeController {
 	async likePost(req: Request, res: Response) {

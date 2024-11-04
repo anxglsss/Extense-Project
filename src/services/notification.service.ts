@@ -1,5 +1,5 @@
+import { NotificationDto } from '@/dtos/notification.dto'
 import { PrismaClient } from '@prisma/client'
-import { NotificationDto } from '../dtos/notification.dto'
 
 const prisma = new PrismaClient()
 

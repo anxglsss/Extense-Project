@@ -1,6 +1,6 @@
+import { favoriteController } from '@/controllers/favorite.controller'
+import { authMiddleware } from '@/middlewares/auth.middleware'
 import { Router } from 'express'
-import { favoriteController } from '../controllers/favorite.controller'
-import { authMiddleware } from '../middlewares/auth.middleware'
 
 export const favoriteRouter = Router()
 

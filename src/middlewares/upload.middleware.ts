@@ -1,7 +1,7 @@
+import { s3 } from '@/config/aws.config'
 import { NextFunction, Request, Response } from 'express'
 import multer from 'multer'
 import multerS3 from 'multer-s3'
-import { s3 } from '../config/aws.config'
 
 export const uploadToS3 = (bucketName: string, fileName: string) => {
 	const upload = multer({
