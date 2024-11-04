@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { authController } from '../controllers/auth.controller'
 import { LoginUserSchema, RegisterUserSchema } from '../dtos/user.dto'
+import { authMiddleware } from '../middlewares/auth.middleware'
 import { validationMiddleware } from '../middlewares/validation.middleware'
 
 export const authRouter = Router()
@@ -15,4 +16,5 @@ authRouter.post(
 	validationMiddleware(RegisterUserSchema),
 	authController.register
 )
-authRouter.post('/logout', authController.logout)
+authRouter.post('/logout', authMiddleware as any, authController.logout)
+authRouter.post('/refresh-token', authController.refreshToken)

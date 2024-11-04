@@ -15,7 +15,6 @@ export const authMiddleware = async (
 	if (!token) {
 		return res.status(401).json({ error: 'No token provided' })
 	}
-
 	try {
 		const user = await tokenService.verifyAccessToken(token)
 		req.user = user

@@ -6,6 +6,15 @@ const prisma = new PrismaClient()
 
 class FavoriteService {
 	async favoritePost(favorite: FavoriteDto) {
+		const existingFav = await prisma.favorite.findFirst({
+			where: {
+				userId: favorite.userId,
+				postId: favorite.postId,
+			},
+		})
+		if (existingFav) {
+			throw new Error('User has already add to favorite this post')
+		}
 		return await prisma.favorite.create({
 			data: {
 				userId: favorite.userId,
